@@ -1,7 +1,9 @@
-This is my orignal file.
+This is my original file.
 
 Sundan ninyo ito sa ilalim by placing your Name.
 
 Ako to si Keith Marlou Aldueza (Backend Developer)
 
 Ako to si Ivan Abduhadi (DevOps)
+
+Ako to si Nathaniel Ashley Ellacer (UI/UX Developer)
