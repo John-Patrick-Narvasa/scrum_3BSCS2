@@ -5,4 +5,6 @@ Scrum Masters update/put your name here:
 
 BE of BAi: Keith Marlou Aldueza
 
+Dev Ops of BAi: Ivan S. Abduhadi
+
 UI of BAi: Nathaniel Ashley Ellacer
