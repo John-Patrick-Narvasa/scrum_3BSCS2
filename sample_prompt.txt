@@ -1,0 +1,2 @@
+sample agent prompt:
+@ui-ux create main page login page for NEU ERP system where there is login, resetting of password and create account
