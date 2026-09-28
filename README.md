@@ -1,11 +1,32 @@
 # scrum_3BSCS-2
-This is a test on how to setup repository for the group project
 
-Scrum Masters update/put your name here: John Patrick Narvasa
+This is a test repository setup for the **3BSCS-2** group project.
 
-BE of BAi: Keith Marlou Aldueza
+---
 
-Dev Ops of BAi: Ivan S. Abduhadi
+##  The bAI Group Team members
 
-UI of BAi: Nathaniel Ashley Ellacer
+
+| Role | Name |
+| :--- | :--- |
+| **Scrum Master** | John Patrick Narvasa |
+| **UI/UX Developer** | Nathaniel Ashley Ellacer |
+| **Backend Engineer** | Keith Marlou Aldueza |
+| **DevSecOps & Test Engineer** | Ivan Abduhadi |
+
+---
+
+## Tech Stack & Tools
+
+| Category | Technology / Tool | Purpose / Notes |
+| :--- | :--- | :--- |
+| **Frontend** | | |
+| **Backend** | | |
+| **Database** | | |
+| **DevSecOps / CI/CD**| | |
+| **Testing** | | |
+| **Project Management**| | |
+
+---
+
 
