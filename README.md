@@ -18,14 +18,13 @@ This is a test repository setup for the **3BSCS-2** group project.
 
 ## Tech Stack & Tools
 
-| Category | Technology / Tool | Purpose / Notes |
-| :--- | :--- | :--- |
-| **Frontend** | | |
-| **Backend** | | |
-| **Database** | | |
-| **DevSecOps / CI/CD**| | |
-| **Testing** | | |
-| **Project Management**| | |
+| Category | Technology / Tool | 
+| :--- | :--- | 
+| **Frontend** | Next.js (App Router), Tailwind CSS | 
+| **Backend** | Next.js Server Actions / API Routes, Supabase Auth | 
+| **Database** | PostgreSQL (Supabase), Supabase RLS (Row Level Security) | 
+| **DevSecOps / CI/CD**| Git, GitHub Actions / Branch Protection Policies |
+| **Testing** | Jest / Playwright (Automated Testing), Manual Security / RLS Audit Suites |
 
 ---
 
