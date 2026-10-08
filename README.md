@@ -18,9 +18,9 @@ This is a test repository setup for the **3BSCS-2** group project.
 
 ## Tech Stack & Tools
 
-| Category | Technology / Tool | 
+| Category | Tech / Tool | 
 | :--- | :--- | 
-| **Frontend** | Next.js (App Router), Tailwind CSS | 
+| **Frontend** | Next.js (App Router), React.js, Tailwind CSS | 
 | **Backend** | Next.js Server Actions / API Routes, Supabase Auth | 
 | **Database** | PostgreSQL (Supabase), Supabase RLS (Row Level Security) | 
 | **DevSecOps / CI/CD**| Git, GitHub Actions / Branch Protection Policies |
