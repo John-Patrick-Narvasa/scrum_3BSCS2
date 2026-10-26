@@ -4,3 +4,4 @@ folderbase.md
 .env.example
 .env.local
 node_modules
+generate_prompts.py
