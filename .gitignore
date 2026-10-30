@@ -5,3 +5,7 @@ folderbase.md
 .env.local
 node_modules
 generate_prompts.py
+# Generated build output
+.next/
+tsconfig.tsbuildinfo
+.vercel/
