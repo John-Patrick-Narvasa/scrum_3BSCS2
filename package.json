@@ -9,9 +9,7 @@
     "test:e2e": "playwright test",
     "db:start": "supabase start",
     "db:reset": "supabase db reset",
-    "db:types": "supabase gen types typescript --linked --schema public > src/types/database.types.ts",
-    "db:migrate": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/db-migrate.ps1",
-    "db:migrate:apply": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/db-migrate.ps1 -Apply"
+    "db:types": "supabase gen types typescript --local > src/types/database.types.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.2",
@@ -21,9 +19,6 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.61.0",
-    "next": "^16.4.3",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1",
     "react-hook-form": "^7.91.0",
     "tailwind-merge": "^3.7.0",
     "zod": "^4.6.7"
@@ -35,9 +30,6 @@
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@types/jest": "^30.0.0",
-    "@types/node": "^26.6.6",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
     "autoprefixer": "^10.6.1",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
@@ -48,7 +40,6 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "supabase": "^2.122.0",
     "tailwindcss": "^3.4.19",
-    "ts-jest": "^29.4.15",
-    "typescript": "6.0.3"
+    "ts-jest": "^29.4.15"
   }
 }
