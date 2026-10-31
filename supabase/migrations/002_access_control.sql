@@ -119,28 +119,28 @@ BEGIN
     CASE TG_TABLE_NAME
         WHEN 'employee' THEN
             SELECT count(*) INTO v_n FROM (
-                SELECT 1 FROM job_history WHERE empno = OLD.empno AND NOT is_deleted
+                SELECT 1 FROM jobhistory WHERE empno = OLD.empno AND NOT is_deleted
                 UNION ALL
                 SELECT 1 FROM sales      WHERE empno = OLD.empno AND NOT is_deleted) c;
         WHEN 'department' THEN
-            SELECT count(*) INTO v_n FROM job_history
+            SELECT count(*) INTO v_n FROM jobhistory
              WHERE deptcode = OLD.deptcode AND NOT is_deleted;
         WHEN 'job' THEN
-            SELECT count(*) INTO v_n FROM job_history
+            SELECT count(*) INTO v_n FROM jobhistory
              WHERE jobcode = OLD.jobcode AND NOT is_deleted;
         WHEN 'customer' THEN
             SELECT count(*) INTO v_n FROM sales
              WHERE custno = OLD.custno AND NOT is_deleted;
         WHEN 'sales' THEN
             SELECT count(*) INTO v_n FROM (
-                SELECT 1 FROM sales_detail WHERE transno = OLD.transno AND NOT is_deleted
+                SELECT 1 FROM salesdetail WHERE transno = OLD.transno AND NOT is_deleted
                 UNION ALL
                 SELECT 1 FROM payment     WHERE transno = OLD.transno AND NOT is_deleted) c;
         WHEN 'product' THEN
             SELECT count(*) INTO v_n FROM (
-                SELECT 1 FROM sales_detail WHERE prodcode = OLD.prodcode AND NOT is_deleted
+                SELECT 1 FROM salesdetail WHERE prodcode = OLD.prodcode AND NOT is_deleted
                 UNION ALL
-                SELECT 1 FROM price_hist   WHERE prodcode = OLD.prodcode AND NOT is_deleted) c;
+                SELECT 1 FROM pricehist   WHERE prodcode = OLD.prodcode AND NOT is_deleted) c;
         ELSE
             NULL;                                    -- child tables: nothing to check
     END CASE;
@@ -163,13 +163,13 @@ BEGIN
             ('employee',    'empno'),
             ('department',  'deptcode'),
             ('job',         'jobcode'),
-            ('job_history',  'empno,jobcode,effdate'),
+            ('jobhistory',  'empno,jobcode,effdate'),
             ('customer',    'custno'),
             ('sales',       'transno'),
-            ('sales_detail', 'transno,prodcode'),
+            ('salesdetail', 'transno,prodcode'),
             ('product',     'prodcode'),
             ('payment',     'orno'),
-            ('price_hist',   'effdate,prodcode')
+            ('pricehist',   'effdate,prodcode')
         ) AS t(tbl, keycols)
     LOOP
         -- new columns
