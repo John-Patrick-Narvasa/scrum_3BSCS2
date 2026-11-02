@@ -1,4 +1,4 @@
-﻿export default function PlaceholderPage() {
+export default function PlaceholderPage() {
     return (
         <main style={{ padding: "2rem" }}>
             <h1>Page Under Development</h1>

@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react'
 
-export default function RootLayout({
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <div className="dashboard-layout min-h-screen">
+      {children}
+    </div>
   )
 }
