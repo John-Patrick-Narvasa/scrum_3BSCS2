@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_user: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          is_blocked: boolean | null
+          record_status: string
+          role: string
+          stamp: string | null
+          status: string
+          username: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id: string
+          is_blocked?: boolean | null
+          record_status?: string
+          role: string
+          stamp?: string | null
+          status?: string
+          username: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          is_blocked?: boolean | null
+          record_status?: string
+          role?: string
+          stamp?: string | null
+          status?: string
+          username?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "app_user_approved_by_fk"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "app_user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "app_user_role_fk"
+            columns: ["role"]
+            isOneToOne: false
+            referencedRelation: "role"
+            referencedColumns: ["role_code"]
+          },
+        ]
+      }
       audit_log: {
         Row: {
           action: string
@@ -225,6 +285,24 @@ export type Database = {
           },
         ]
       }
+      module: {
+        Row: {
+          description: string | null
+          module_code: string
+          module_name: string
+        }
+        Insert: {
+          description?: string | null
+          module_code: string
+          module_name: string
+        }
+        Update: {
+          description?: string | null
+          module_code?: string
+          module_name?: string
+        }
+        Relationships: []
+      }
       payment: {
         Row: {
           amount: number | null
@@ -327,6 +405,53 @@ export type Database = {
           prodcode?: string
           stamp?: string | null
           unit?: string | null
+        }
+        Relationships: []
+      }
+      rights_catalogue: {
+        Row: {
+          description: string | null
+          module_code: string
+          right_code: string
+          right_name: string
+        }
+        Insert: {
+          description?: string | null
+          module_code: string
+          right_code: string
+          right_name: string
+        }
+        Update: {
+          description?: string | null
+          module_code?: string
+          right_code?: string
+          right_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rights_catalogue_module_fk"
+            columns: ["module_code"]
+            isOneToOne: false
+            referencedRelation: "module"
+            referencedColumns: ["module_code"]
+          },
+        ]
+      }
+      role: {
+        Row: {
+          description: string | null
+          role_code: string
+          role_name: string
+        }
+        Insert: {
+          description?: string | null
+          role_code: string
+          role_name: string
+        }
+        Update: {
+          description?: string | null
+          role_code?: string
+          role_name?: string
         }
         Relationships: []
       }
@@ -436,6 +561,87 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "sales_active"
             referencedColumns: ["transno"]
+          },
+        ]
+      }
+      user_module: {
+        Row: {
+          created_at: string
+          module_code: string
+          record_status: string
+          stamp: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          module_code: string
+          record_status?: string
+          stamp?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          module_code?: string
+          record_status?: string
+          stamp?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_module_module_fk"
+            columns: ["module_code"]
+            isOneToOne: false
+            referencedRelation: "module"
+            referencedColumns: ["module_code"]
+          },
+          {
+            foreignKeyName: "user_module_user_fk"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "app_user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_permission: {
+        Row: {
+          created_at: string
+          module_code: string
+          record_status: string
+          right_code: string
+          stamp: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          module_code: string
+          record_status?: string
+          right_code: string
+          stamp?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          module_code?: string
+          record_status?: string
+          right_code?: string
+          stamp?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_permission_module_right_fk"
+            columns: ["module_code", "right_code"]
+            isOneToOne: false
+            referencedRelation: "rights_catalogue"
+            referencedColumns: ["module_code", "right_code"]
+          },
+          {
+            foreignKeyName: "user_permission_user_module_fk"
+            columns: ["user_id", "module_code"]
+            isOneToOne: false
+            referencedRelation: "user_module"
+            referencedColumns: ["user_id", "module_code"]
           },
         ]
       }
