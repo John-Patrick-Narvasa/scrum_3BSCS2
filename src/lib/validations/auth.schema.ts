@@ -1,5 +1,8 @@
 import { z } from 'zod'
 
+// ============================================================================
+// HIGHLIGHT: Login Schema
+// ============================================================================
 export const loginSchema = z.object({
   emailOrUsername: z
     .string()
@@ -11,6 +14,9 @@ export const loginSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>
 
+// ============================================================================
+// HIGHLIGHT: Register Schema (Includes optional empno linking to HopeDB employees)
+// ============================================================================
 export const registerSchema = z
   .object({
     username: z
@@ -23,6 +29,12 @@ export const registerSchema = z
       .string()
       .min(2, 'Full name is required')
       .max(60, 'Full name must be at most 60 characters'),
+    // HIGHLIGHT: Optional employee number linking to HopeDB employee table (e.g. '00001')
+    empno: z
+      .string()
+      .max(5, 'Employee number cannot exceed 5 characters')
+      .optional()
+      .or(z.literal('')),
     password: z
       .string()
       .min(8, 'Password must be at least 8 characters')

@@ -4,7 +4,7 @@ import React, { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { loginAction } from '@/lib/actions/auth.actions'
-import { Building2, Lock, User, AlertCircle, ArrowRight, CheckCircle2, ShieldAlert } from 'lucide-react'
+import { Building2, Lock, User, AlertCircle, ArrowRight } from 'lucide-react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -13,18 +13,23 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // ============================================================================
+  // HIGHLIGHT: Submit using native FormData to prevent passwords from appearing
+  // in Next.js Turbopack dev server terminal logs!
+  // ============================================================================
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
 
+    const formPayload = new FormData()
+    formPayload.append('emailOrUsername', identifier.trim())
+    formPayload.append('password', password)
+
     startTransition(async () => {
-      const result = await loginAction({
-        emailOrUsername: identifier,
-        password: password,
-      })
+      const result = await loginAction(formPayload)
 
       if (!result.ok) {
-        setError(result.error)
+        setError(result.error || 'Authentication failed')
         return
       }
 

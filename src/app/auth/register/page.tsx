@@ -4,7 +4,17 @@ import React, { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { registerAction } from '@/lib/actions/auth.actions'
-import { Building2, User, Mail, Lock, ShieldCheck, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react'
+import {
+  Building2,
+  User,
+  Mail,
+  Lock,
+  ShieldCheck,
+  AlertCircle,
+  CheckCircle2,
+  ArrowRight,
+  BadgeCheck,
+} from 'lucide-react'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -12,6 +22,7 @@ export default function RegisterPage() {
     username: '',
     fullName: '',
     email: '',
+    empno: '', // HIGHLIGHT: Optional employee number linking to HopeDB
     password: '',
     confirmPassword: '',
   })
@@ -23,15 +34,30 @@ export default function RegisterPage() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // ============================================================================
+  // HIGHLIGHT: Submit using native FormData to prevent passwords from appearing
+  // in Next.js Turbopack dev server terminal logs!
+  // ============================================================================
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
     setSuccessMessage(null)
 
+    // Construct FormData object to protect credentials in server action log
+    const formPayload = new FormData()
+    formPayload.append('username', formData.username)
+    formPayload.append('fullName', formData.fullName)
+    formPayload.append('email', formData.email)
+    if (formData.empno.trim()) {
+      formPayload.append('empno', formData.empno.trim())
+    }
+    formPayload.append('password', formData.password)
+    formPayload.append('confirmPassword', formData.confirmPassword)
+
     startTransition(async () => {
-      const result = await registerAction(formData)
+      const result = await registerAction(formPayload)
       if (!result.ok) {
-        setError(result.error)
+        setError(result.error || 'Registration failed')
         return
       }
 
@@ -173,6 +199,37 @@ export default function RegisterPage() {
                     />
                   </div>
                 </div>
+              </div>
+
+              {/* HIGHLIGHT: Employee ID (empno) linkage to HopeDB */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label
+                    htmlFor="empno"
+                    className="block text-xs font-bold uppercase tracking-wider text-charcoal-text"
+                  >
+                    Employee ID (HopeDB Linkage &bull; Optional)
+                  </label>
+                  <span className="text-[10px] text-muted-text">e.g. 00001, 00003, 00005</span>
+                </div>
+                <div className="relative rounded-md shadow-sm">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
+                    <BadgeCheck className="w-4 h-4" />
+                  </div>
+                  <input
+                    id="empno"
+                    name="empno"
+                    type="text"
+                    maxLength={5}
+                    value={formData.empno}
+                    onChange={handleChange}
+                    placeholder="e.g. 00001 (from HopeDB employee table)"
+                    className="block w-full pl-9 pr-3 py-2 text-sm border border-stone-300 rounded-md font-mono focus:outline-none focus:ring-2 focus:ring-primary-green focus:border-primary-green"
+                  />
+                </div>
+                <p className="mt-1 text-[11px] text-muted-text">
+                  If you are one of the 60+ pre-existing Hope, Inc. employees, enter your 5-digit ID to link your personnel record.
+                </p>
               </div>
 
               <div>

@@ -8,6 +8,7 @@ export interface UserSession {
   username: string
   email: string
   fullName: string
+  empno?: string | null
   role: Role
   status: AccountStatus
   permissions: string[]
@@ -20,6 +21,7 @@ export interface AppUser {
   username: string
   email: string
   full_name: string
+  empno?: string | null
   role: Role
   status: AccountStatus
   approved_by: string | null

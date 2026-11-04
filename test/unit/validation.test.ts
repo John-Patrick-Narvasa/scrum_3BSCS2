@@ -36,6 +36,30 @@ describe('Auth Validation Schemas', () => {
       expect(result.success).toBe(true)
     })
 
+    it('accepts valid registration input with empno linkage', () => {
+      const result = registerSchema.safeParse({
+        username: 'jdelacruz',
+        fullName: 'Juan dela Cruz',
+        email: 'juan@hope.com',
+        empno: '00001',
+        password: 'Password123!',
+        confirmPassword: 'Password123!',
+      })
+      expect(result.success).toBe(true)
+    })
+
+    it('rejects empno exceeding 5 characters', () => {
+      const result = registerSchema.safeParse({
+        username: 'jdelacruz',
+        fullName: 'Juan dela Cruz',
+        email: 'juan@hope.com',
+        empno: '000001',
+        password: 'Password123!',
+        confirmPassword: 'Password123!',
+      })
+      expect(result.success).toBe(false)
+    })
+
     it('rejects mismatched passwords', () => {
       const result = registerSchema.safeParse({
         username: 'jdelacruz',

@@ -29,4 +29,19 @@ describe('AuthService Logic', () => {
     expect(result.status).toBe('pending')
     expect(result.role).toBe('user')
   })
+
+  it('registers new user with linked empno', async () => {
+    const randomUser = `empuser_${Date.now()}`
+    const result = await service.register({
+      username: randomUser,
+      fullName: 'John Smith Linked',
+      email: `${randomUser}@hope.com`,
+      empno: '00001',
+      password: 'SecurePassword123!',
+      confirmPassword: 'SecurePassword123!',
+    })
+
+    expect(result.empno).toBe('00001')
+    expect(result.status).toBe('pending')
+  })
 })

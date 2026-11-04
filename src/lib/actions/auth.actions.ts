@@ -11,13 +11,33 @@ import { authService } from '@/lib/services/auth.service'
 import { ActionResult, UserSession, AppUser, Role, AccountStatus } from '@/types'
 
 /**
- * Log in action
+ * Helper to convert FormData or plain object into a plain record
+ * HIGHLIGHT: Using FormData prevents Next.js Turbopack from logging
+ * sensitive passwords to the dev server console!
+ */
+function toPlainObject(input: unknown): Record<string, any> {
+  if (input instanceof FormData) {
+    const obj: Record<string, any> = {}
+    input.forEach((value, key) => {
+      obj[key] = typeof value === 'string' ? value.trim() : value
+    })
+    return obj
+  }
+  if (typeof input === 'object' && input !== null) {
+    return input as Record<string, any>
+  }
+  return {}
+}
+
+/**
+ * HIGHLIGHT: Log in action supporting FormData to avoid terminal logging of password
  */
 export async function loginAction(
-  input: unknown
+  input: FormData | unknown
 ): Promise<ActionResult<UserSession>> {
   try {
-    const parsed = loginSchema.safeParse(input)
+    const rawData = toPlainObject(input)
+    const parsed = loginSchema.safeParse(rawData)
     if (!parsed.success) {
       const firstError = parsed.error.issues[0]?.message || 'Invalid login details'
       return { ok: false, error: firstError }
@@ -31,13 +51,14 @@ export async function loginAction(
 }
 
 /**
- * Register user action (starts as pending per S1-DEV-02)
+ * HIGHLIGHT: Register user action supporting FormData and empno linkage
  */
 export async function registerAction(
-  input: unknown
+  input: FormData | unknown
 ): Promise<ActionResult<AppUser>> {
   try {
-    const parsed = registerSchema.safeParse(input)
+    const rawData = toPlainObject(input)
+    const parsed = registerSchema.safeParse(rawData)
     if (!parsed.success) {
       const firstError = parsed.error.issues[0]?.message || 'Invalid registration details'
       return { ok: false, error: firstError }
@@ -48,7 +69,7 @@ export async function registerAction(
       ok: true,
       data: newUser,
       message:
-        'Registration submitted successfully! Your account is pending administrator approval before access is granted.',
+        'Registration submitted successfully! Your account is created with status PENDING and requires administrator approval before accessing ERP modules.',
     }
   } catch (error: any) {
     return { ok: false, error: error.message || 'Registration failed' }
@@ -80,13 +101,14 @@ export async function getSessionAction(): Promise<ActionResult<UserSession | nul
 }
 
 /**
- * Request password reset token action (S1-DEV-05)
+ * Request password reset token action
  */
 export async function requestPasswordResetAction(
-  input: unknown
+  input: FormData | unknown
 ): Promise<ActionResult<{ token: string; message: string }>> {
   try {
-    const parsed = resetPasswordRequestSchema.safeParse(input)
+    const rawData = toPlainObject(input)
+    const parsed = resetPasswordRequestSchema.safeParse(rawData)
     if (!parsed.success) {
       return { ok: false, error: parsed.error.issues[0]?.message || 'Invalid email address' }
     }
@@ -99,13 +121,14 @@ export async function requestPasswordResetAction(
 }
 
 /**
- * Reset password action (S1-DEV-05)
+ * Reset password action
  */
 export async function resetPasswordAction(
-  input: unknown
+  input: FormData | unknown
 ): Promise<ActionResult<null>> {
   try {
-    const parsed = resetPasswordSchema.safeParse(input)
+    const rawData = toPlainObject(input)
+    const parsed = resetPasswordSchema.safeParse(rawData)
     if (!parsed.success) {
       return { ok: false, error: parsed.error.issues[0]?.message || 'Validation error' }
     }
@@ -118,14 +141,15 @@ export async function resetPasswordAction(
 }
 
 /**
- * Set password on first login action (S1-DEV-04)
+ * Set password on first login action
  */
 export async function setPasswordAction(
   userId: string,
-  input: unknown
+  input: FormData | unknown
 ): Promise<ActionResult<null>> {
   try {
-    const parsed = setPasswordSchema.safeParse(input)
+    const rawData = toPlainObject(input)
+    const parsed = setPasswordSchema.safeParse(rawData)
     if (!parsed.success) {
       return { ok: false, error: parsed.error.issues[0]?.message || 'Validation error' }
     }
@@ -150,7 +174,7 @@ export async function listUsersAction(): Promise<ActionResult<AppUser[]>> {
 }
 
 /**
- * Approve pending user action (S1-DEV-06)
+ * Approve pending user action
  */
 export async function approveUserAction(
   userId: string,
@@ -165,7 +189,7 @@ export async function approveUserAction(
 }
 
 /**
- * Update user status/role action (S1-DEV-06)
+ * Update user status/role action
  */
 export async function updateUserStatusAction(
   userId: string,
@@ -181,7 +205,7 @@ export async function updateUserStatusAction(
 }
 
 /**
- * Assign user permissions/rights action (S1-DEV-07)
+ * Assign user permissions/rights action
  */
 export async function assignUserRightsAction(
   userId: string,
