@@ -52,10 +52,10 @@ export default async function HomePage() {
 
       {/* Hero Section */}
       <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col items-center justify-center text-center">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-100 text-primary-green border border-emerald-300 text-xs font-bold mb-6">
+        {/* <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-100 text-primary-green border border-emerald-300 text-xs font-bold mb-6">
           <Shield className="w-4 h-4 text-primary-green" />
           <span>Sprint 1 &bull; Auth & Security Layer Active</span>
-        </div>
+        </div> */}
 
         <h1 className="text-4xl sm:text-5xl font-black text-charcoal-text tracking-tight max-w-3xl leading-tight">
           Unified Business Management for <span className="text-primary-green">Hope, Inc.</span>
