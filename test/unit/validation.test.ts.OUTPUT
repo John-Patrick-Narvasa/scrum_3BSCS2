@@ -1,0 +1,17 @@
+PASS test/unit/validation.test.ts
+
+Auth Validation Schemas
+  loginSchema
+    ✓ accepts valid username and password
+    ✓ rejects short password (< 6 chars)
+
+  registerSchema
+    ✓ accepts valid registration input
+    ✓ rejects mismatched passwords
+    ✓ rejects passwords without uppercase letters or numbers
+
+  resetPasswordSchema
+    ✓ validates token and matching new passwords
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
