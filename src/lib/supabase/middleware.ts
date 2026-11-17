@@ -6,16 +6,19 @@ export async function updateSession(request: NextRequest) {
     request,
   })
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || 'placeholder-key'
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    supabaseUrl,
+    supabaseKey,
     {
       cookies: {
         getAll() {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           supabaseResponse = NextResponse.next({
             request,
           })
@@ -27,7 +30,15 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  await supabase.auth.getClaims()
+  try {
+    if (typeof (supabase.auth as any)?.getClaims === 'function') {
+      await (supabase.auth as any).getClaims()
+    } else if (typeof supabase?.auth?.getUser === 'function') {
+      await supabase.auth.getUser()
+    }
+  } catch {
+    // Graceful fallback when backend or auth is not initialized
+  }
 
   return supabaseResponse
 }

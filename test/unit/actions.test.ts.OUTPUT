@@ -1,0 +1,8 @@
+PASS test/unit/actions.test.ts
+
+AuthService Logic
+  ✓ rejects invalid password credentials
+  ✓ registers new user with status pending
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
