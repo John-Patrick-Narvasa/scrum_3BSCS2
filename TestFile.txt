@@ -12,3 +12,4 @@ Ako to si Nathaniel Ashley Ellacer (UI/UX Developer)
 S1-DBA-05
 S1-DBA-06
 S2-DBA-01
+S2-DBA-02
